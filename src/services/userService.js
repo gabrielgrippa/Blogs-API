@@ -47,5 +47,19 @@ const getAllUsers = async () => {
     return result;
   });
 };
+
+const getByUserId = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  if (!user) {
+    return undefined;
+  }
+  const result = {
+    id: user.id,
+    displayName: user.displayName,
+    email: user.email,
+    image: user.image, 
+  };
+  return result;
+};
  
-module.exports = { validateUser, checkEmail, createUser, getAllUsers };
+module.exports = { validateUser, checkEmail, createUser, getAllUsers, getByUserId };
