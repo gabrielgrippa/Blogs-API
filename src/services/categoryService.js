@@ -6,17 +6,9 @@ const createCategory = async (name) => {
   return newCategory;
 };
 
-// const getAllCategorys = async () => {
-//   const Categorys = await Category.findAll();
-//   return Categorys.map((Category) => {
-//     const result = {
-//       id: Category.id,
-//       displayName: Category.displayName,
-//       email: Category.email,
-//       image: Category.image, 
-//     };
-//     return result;
-//   });
-// };
+const getAllCategories = async () => {
+  const categories = await Category.findAll();
+  return categories;
+};
  
-module.exports = { createCategory };
+module.exports = { createCategory, getAllCategories };
