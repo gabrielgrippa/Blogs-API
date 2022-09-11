@@ -19,7 +19,7 @@ const User = (sequelize, DataTypes) => {
       foreignKey: 'userId', as: 'posts',
     });
   };
-
+  
   return User;
 };
 
