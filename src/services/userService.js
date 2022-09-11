@@ -35,4 +35,17 @@ const createUser = async (newUser) => {
   return token;
 };
 
-module.exports = { validateUser, checkEmail, createUser };
+const getAllUsers = async () => {
+  const users = await User.findAll();
+  return users.map((user) => {
+    const result = {
+      id: user.id,
+      displayName: user.displayName,
+      email: user.email,
+      image: user.image, 
+    };
+    return result;
+  });
+};
+ 
+module.exports = { validateUser, checkEmail, createUser, getAllUsers };
