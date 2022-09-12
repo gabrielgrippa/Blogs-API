@@ -6,5 +6,7 @@ const { tokenValidation } = require('../middlewares/tokenValidation');
 const postRoute = express.Router();
 
 postRoute.post('/', tokenValidation, postController.addPost);
+postRoute.get('/', tokenValidation, postController.getAllPosts);
+postRoute.get('/:id', tokenValidation, postController.getPostById);
 
 module.exports = postRoute;
