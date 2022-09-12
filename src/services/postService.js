@@ -35,43 +35,33 @@ const createPost = async (data, userId) => {
 // };
 
 const getPostById = async (id) => {
-    const post = await BlogPost.findOne({ where: { id }, raw: true });
-    if (!post) return undefined;
-    const user = await User.findOne({ where: { id: post.userId }, raw: true });
-    delete user.password;
-    const postCatData = await PostCategory.findAll({ where: { postId: post.id }, raw: true });
-    const categoriesData = await Category.findAll({ raw: true });
-    const categories = postCatData.map((category) => {
-      const teste = categoriesData.find((categoryId) => categoryId.id === category.categoryId);
-      return teste;
-    });
-    const result = {
-      ...post,
-      user,
-      categories,
-    };
-    return result;
+  const post = await BlogPost.findOne({ where: { id }, raw: true });
+  if (!post) return undefined;
+  const user = await User.findOne({ where: { id: post.userId }, raw: true });
+  delete user.password;
+  const postCatData = await PostCategory.findAll({ where: { postId: post.id }, raw: true });
+  const categoriesData = await Category.findAll({ raw: true });
+  const categories = postCatData.map((category) => {
+    const teste = categoriesData.find((categoryId) => categoryId.id === category.categoryId);
+    return teste;
+  });
+  const result = {
+    ...post,
+    user,
+    categories,
+  };
+  return result;
 };
 
 const getAllPosts = async () => {
-  const posts = await BlogPost.findAll();
-  const newPosts = posts.map(({ dataValues }) => dataValues);
-  const users = await User.findAll();
-  const users2 = users.map(({ dataValues }) => dataValues);
-  const newUsers = users2.map(({ password, ...user }) => user);
-  // https://stackoverflow.com/questions/18133635/remove-property-for-all-objects-in-array
-  console.log(newUsers);
-  const teste = newPosts.map((post) => {
-    const result = {
-      ...post,
-      user: newUsers.find((user) => user.id === post.userId),
-      categories: 1,
-    };
-    return result;
-  });
-  console.log(teste);
+  const data = await BlogPost.findAll({ raw: true });
+  const result = await Promise.all(data.map(async (post) => {
+    const blogPost = await getPostById(post.id);
+    return blogPost;
+  }));
+  console.log(result);
 
-  return teste;
+  return result;
 };
  
 module.exports = { getUserId, createPost, validate, getAllPosts, getPostById };

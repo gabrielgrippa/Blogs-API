@@ -10,7 +10,7 @@ const addPost = async (req, res) => {
 };
 
 const getAllPosts = async (_req, res) => {
-  const result = postService.getAllPosts();
+  const result = await postService.getAllPosts();
   return res.status(200).json(result);
 };
 
