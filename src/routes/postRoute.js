@@ -9,5 +9,6 @@ postRoute.post('/', tokenValidation, postController.addPost);
 postRoute.get('/', tokenValidation, postController.getAllPosts);
 postRoute.get('/:id', tokenValidation, postController.getPostById);
 postRoute.put('/:id', tokenValidation, postController.editPost);
+postRoute.delete('/:id', tokenValidation, postController.deletePost);
 
 module.exports = postRoute;

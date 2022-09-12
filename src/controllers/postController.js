@@ -32,4 +32,12 @@ const editPost = async (req, res) => {
   return res.status(200).json(result);
 };
 
-module.exports = { addPost, getAllPosts, getPostById, editPost };
+const deletePost = async (req, res) => {
+  const error = await postService.deletePost(req.params.id, req.user.data);
+  if (error) {
+    return res.status(error.number).json({ message: error.message });
+  }
+  return res.status(204).json();
+};
+
+module.exports = { addPost, getAllPosts, getPostById, editPost, deletePost };
