@@ -8,5 +8,6 @@ const postRoute = express.Router();
 postRoute.post('/', tokenValidation, postController.addPost);
 postRoute.get('/', tokenValidation, postController.getAllPosts);
 postRoute.get('/:id', tokenValidation, postController.getPostById);
+postRoute.put('/:id', tokenValidation, postController.editPost);
 
 module.exports = postRoute;

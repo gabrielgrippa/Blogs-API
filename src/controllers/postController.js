@@ -22,4 +22,14 @@ const getPostById = async (req, res) => {
   return res.status(200).json(result);
 };
 
-module.exports = { addPost, getAllPosts, getPostById };
+const editPost = async (req, res) => {
+  if (!req.body.title || !req.body.content) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+  const result = await postService.editPost(req.body, req.params.id, req.user.data);
+  if (!result) return res.status(401).json({ message: 'Unauthorized user' });
+
+  return res.status(200).json(result);
+};
+
+module.exports = { addPost, getAllPosts, getPostById, editPost };

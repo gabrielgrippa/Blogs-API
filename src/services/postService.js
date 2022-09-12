@@ -59,9 +59,19 @@ const getAllPosts = async () => {
     const blogPost = await getPostById(post.id);
     return blogPost;
   }));
-  console.log(result);
+  // https://advancedweb.hu/how-to-use-async-functions-with-array-map-in-javascript/
+  return result;
+};
 
+const editPost = async (data, id, email) => {
+  const { title, content } = data;
+  const userId = await getUserId(email);
+  const postToBeUpdated = await BlogPost.findOne({ where: { id }, raw: true });
+  if (userId !== postToBeUpdated.userId) return undefined;
+  await BlogPost.update({ title, content }, { where: { id } });
+  const result = await getPostById(id);
+  console.log(postToBeUpdated);
   return result;
 };
  
-module.exports = { getUserId, createPost, validate, getAllPosts, getPostById };
+module.exports = { getUserId, createPost, validate, getAllPosts, getPostById, editPost };
